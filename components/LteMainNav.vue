@@ -8,7 +8,7 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" @click="signoutHendle()" href="#" role="button" alt="sign-out" title="sign out">
+                <a class="nav-link" @click="signoutHendle()" role="button" alt="sign-out" title="sign out">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </li>
@@ -27,3 +27,9 @@
         }
     }
 </script>
+
+<style>
+a{
+    cursor: pointer;
+}
+</style>

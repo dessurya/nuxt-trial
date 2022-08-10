@@ -9,7 +9,7 @@
 					<p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
 					<form @submit.prevent="signinHendle()">
 						<div class="input-group mb-3">
-							<input v-model="input.username" type="text" class="form-control" placeholder="Username">
+							<input v-model="input.email" type="email" name="email" class="form-control" placeholder="Email">
 							<div class="input-group-append">
 								<div class="input-group-text">
 									<span class="fas fa-user"></span>
@@ -37,7 +37,7 @@
 export default{
     data(){
         return{
-            input:{ username:'', password:'' }
+            input:{ email:'', password:'' }
         }
     },
     methods: {
@@ -45,20 +45,17 @@ export default{
             try {
                 this.$toast.show('Sign in Process...')
                 await this.$auth.loginWith('local', { data: this.input }).then((res) => {
-                    this.$store.commit('authLogin/store', res.data.user)
-                    console.log(res.data.user)
+                    if (this.$auth.loggedIn) { this.$toast.show('Sign in Success...!') }
+                    else{ this.$toast.show('Sign in fail...!') }
                 }).catch(e => {
                     this.$toast.show('Sign in fail...!')
                 })
-                if (this.$auth.loggedIn) { 
-                    this.$toast.show('Sign in successs...!')
-                }
-                else{ this.$toast.show('Sign in fail...!') }
             } catch (error) {
                 this.$toast.show('Sign in fail...!')
             }
         }
     },
+    middleware: ['guest'],
     layout: 'blank',
     head:{
         bodyAttrs:{

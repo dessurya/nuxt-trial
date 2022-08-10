@@ -23,54 +23,54 @@ module.exports = {
     port: 3030
   },
   modules: [
-      '@nuxtjs/axios',
-      '@nuxtjs/auth',
-      '@nuxtjs/toast'
+    '@nuxtjs/auth',
+    '@nuxtjs/toast',
+    '@nuxtjs/axios'
   ],
   toast: {
     position: 'bottom-right',
     duration: 2000
   },
   axios: {
-    baseURL: 'http://localhost:7070/'
+    baseURL: 'http://localhost/_laravel/apiPgsql/public/api/',
+    withCredentials: true
   },
   router: {
-    middleware: ['auth']
+    middleware: ['auth','debug-auth'],
+    base: '/'
   },
   auth: {
     strategies: {
         local: {
+            scheme: 'refresh',
             endpoints: {
-                login: {url: '/api/auth/login', method: 'post', propertyName: 'token' },
-                logout: false,
-                // user: {url: '/api/auth/user', method: 'get', propertyName: 'data'}
-                user: false
-            },
-            tokenRequired: true,
-            tokenType: false
+                login: {url: 'auth/login', method: 'post', propertyName: 'result.token' },
+                logout: {url: 'auth/logout', method: 'get' },
+                user: {url: 'auth/me', method: 'get', propertyName: 'user'}
+            }
         }
     },
     redirect: {
         login: '/login',
         logout: '/login',
         user: '/profile',
-        callback:'/dashboard'
+        callback:'/login'
     }
   },
   build: {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
+    // extend (config, { isDev, isClient }) {
+    //   if (isDev && isClient) {
+    //     config.module.rules.push({
+    //       enforce: 'pre',
+    //       test: /\.(js|vue)$/,
+    //       loader: 'eslint-loader',
+    //       exclude: /(node_modules)/
+    //     })
+    //   }
+    // }
   }
 }
 

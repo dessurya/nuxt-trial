@@ -1,10 +1,10 @@
 <template>
     <div>
         <LteMainNav />
-        <LteMainAside />
+        <LteMainAside/>
         <div class="content-wrapper">
             <section class="content">
-                <div class="container-fluid">
+                <div class="container-fluid pt-2 pb-2">
                     <Nuxt/>
                 </div>
             </section>
