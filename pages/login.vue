@@ -9,7 +9,7 @@
 					<p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
 					<form @submit.prevent="signinHendle()">
 						<div class="input-group mb-3">
-							<input v-model="input.email" type="email" name="email" class="form-control" placeholder="Email">
+							<input v-model="input.username" type="text" name="username" class="form-control" placeholder="Username">
 							<div class="input-group-append">
 								<div class="input-group-text">
 									<span class="fas fa-user"></span>
@@ -37,7 +37,7 @@
 export default{
     data(){
         return{
-            input:{ email:'', password:'' }
+            input:{ username:'', password:'' }
         }
     },
     methods: {

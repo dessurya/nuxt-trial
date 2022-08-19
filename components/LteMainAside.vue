@@ -7,7 +7,7 @@
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image"><img src="adminlte-dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image"></div>
-                <div class="info"><a href="#" class="d-block">{{ this.$auth.user.user.name }}</a></div>
+                <div class="info"><a href="#" class="d-block">{{ this.$auth.user.username }}</a></div>
             </div>
 
             <nav class="mt-2">
@@ -17,17 +17,17 @@
                             <a class="nav-link">DASHBOARD</a>
                         </nuxt-link>
                     </li>
-                    <li class="nav-item" v-if="this.$auth.user.akses.user">
+                    <li class="nav-item">
                         <nuxt-link to="/user">
                             <a class="nav-link">USER</a>
                         </nuxt-link>
                     </li>
-                    <li class="nav-item" v-if="this.$auth.user.akses.lfb011">
+                    <li class="nav-item">
                         <nuxt-link to="/lfb011">
                             <a class="nav-link">LFB011</a>
                         </nuxt-link>
                     </li>
-                    <li class="nav-item" v-if="this.$auth.user.akses.lfe011">
+                    <li class="nav-item">
                         <nuxt-link to="/lfe011">
                             <a class="nav-link">LFE011</a>
                         </nuxt-link>

@@ -19,7 +19,6 @@
           class="button--grey">GitHub</a>
       </div>
     </div>
-    <button @click="signoutHendle()">Sign Out</button>
   </section>
 </template>
 
@@ -29,12 +28,6 @@ import AppLogo from '~/components/AppLogo.vue'
 export default {
   components: {
     AppLogo
-  },
-  methods: {
-    signoutHendle() {
-        this.$toast.show('Sign Out successs...!', {icon:'done'})
-        this.$auth.logout()
-    }
   },
 }
 </script>

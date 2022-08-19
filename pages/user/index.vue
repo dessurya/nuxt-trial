@@ -16,14 +16,14 @@
                     <div class="row row-cols-4">
                         <div class="col">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input @change="refreshList(true)" type="text" class="form-control" v-model="listConfig.name">
+                                <label>Nama</label>
+                                <input @change="refreshList(true)" type="text" class="form-control" v-model="listConfig.nama">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>Email</label>
-                                <input @change="refreshList(true)" type="email" class="form-control" v-model="listConfig.email">
+                                <label>Username</label>
+                                <input @change="refreshList(true)" type="text" class="form-control" v-model="listConfig.username">
                             </div>
                         </div>
                     </div>
@@ -34,8 +34,8 @@
                             <div class="form-group">
                                 <label>Order By</label>
                                 <select @change="refreshList(true)" class="form-control" v-model="listConfig.orderBy.key">
-                                    <option value="name">Name</option>
-                                    <option value="email">Email</option>
+                                    <option value="username">Username</option>
+                                    <option value="nama">Nama</option>
                                 </select>
                             </div>
                         </div>
@@ -72,22 +72,22 @@
                         <thead>
                             <tr>
                                 <th>Tools</th>
-                                <th>name</th>
-                                <th>email</th>
+                                <th>Username</th>
+                                <th>Nama</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in userList" :key="item.id">
                                 <td>
                                     <div class="btn-group">
-                                        <nuxt-link :to="`/user/${item.id}/`">
+                                        <nuxt-link :to="`/user/${item.username}/`">
                                             <span class="btn btn-outline-warning btn-sm">Open</span>
                                         </nuxt-link>
-                                        <span @click="deleteHendle(`${item.id}`)" class="btn btn-outline-danger btn-sm">Delete</span>
+                                        <span @click="deleteHendle(`${item.username}`)" class="btn btn-outline-danger btn-sm">Delete</span>
                                     </div>
                                 </td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.email }}</td>
+                                <td>{{ item.username }}</td>
+                                <td>{{ item.nama }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -102,38 +102,38 @@
         data(){
             return {
                 listConfig:{ 
-                    email:'',
-                    name:'',
+                    username:'',
+                    nama:'',
                     paginate:10,
                     page:1,
                     pageLast:1,
-                    orderBy:{key:'name', value:'ASC'}
+                    orderBy:{key:'username', value:'ASC'}
                 }
             }
         },
         async asyncData({$axios}) {
             let userList = []
-            const res = await $axios.get('/user/list').catch(error => {
+            const res = await $axios.get('/user/paginate').catch(error => {
                 console.log(error)
             })
-            userList = res.data.result.data.data
-            listConfig = {
-                email:'',
-                name:'',
-                paginate:'10',
-                page:'1',
-                pageLast: res.data.result.data.last_page,
-                orderBy:{key:'name', value:'ASC'}
+            userList = res.data.data
+            const listConfig = {
+                username:'',
+                nama:'',
+                paginate:10,
+                page:1,
+                pageLast: res.data.last_page,
+                orderBy:{key:'username', value:'ASC'}
             }
             return {
-                userList
+                userList, listConfig
             }
         },
         methods: {
-            async deleteHendle(id) {
+            async deleteHendle(username) {
                 try {
                     this.$toast.show('Delete in Process...')
-                    const res = await this.$axios.delete(`/user/delete/${id}`).catch(error => {
+                    const res = await this.$axios.delete(`/user/delete/${username}`).catch(error => {
                         this.$toast.show('Delete fail')
                     })
                     if(!res.data.res){
@@ -148,14 +148,21 @@
                 }
             },
             async refreshList(firstPage) {
+                let configure = []
+                if (this.listConfig.username != '') { configure.push('username='+this.listConfig.username) }
+                if (this.listConfig.nama != '') { configure.push('nama='+this.listConfig.nama) }
                 if (firstPage) { this.listConfig.page = 1 }
-                const encodeListConfig = window.btoa(JSON.stringify(this.listConfig))
-                const reGet = await this.$axios.get(`/user/list/${encodeListConfig}`).catch(error => {
+                configure.push('page='+this.listConfig.page)
+                configure.push('paginate='+this.listConfig.paginate)
+                configure.push('orderByKey='+this.listConfig.orderBy.key)
+                configure.push('orderByValue='+this.listConfig.orderBy.value)
+                configure = "?"+configure.join("&")
+                const reGet = await this.$axios.get(`/user/paginate${configure}`).catch(error => {
                     console.log(error)
                 })
-                this.listConfig.page = reGet.data.result.data.current_page
-                this.listConfig.pageLast = reGet.data.result.data.last_page
-                this.userList = reGet.data.result.data.data
+                this.listConfig.page = reGet.data.current_page
+                this.listConfig.pageLast = reGet.data.last_page
+                this.userList = reGet.data.data
             }
         }
     }

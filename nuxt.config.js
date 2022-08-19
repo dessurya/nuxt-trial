@@ -32,7 +32,7 @@ module.exports = {
     duration: 2000
   },
   axios: {
-    baseURL: 'http://localhost/_laravel/apiPgsql/public/api/',
+    baseURL: 'http://localhost:8000/',
     withCredentials: true
   },
   router: {
@@ -44,7 +44,7 @@ module.exports = {
         local: {
             scheme: 'refresh',
             endpoints: {
-                login: {url: 'auth/login', method: 'post', propertyName: 'result.token' },
+                login: {url: 'auth/login', method: 'post', propertyName: 'access_token' },
                 logout: {url: 'auth/logout', method: 'get' },
                 user: {url: 'auth/me', method: 'get', propertyName: 'user'}
             }
