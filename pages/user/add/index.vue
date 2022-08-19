@@ -7,14 +7,14 @@
                     <div class="row row-cols-3">
                         <div class="col">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" v-model="input.name" required>
+                                <label>Nama</label>
+                                <input type="text" class="form-control" v-model="input.nama" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" v-model="input.email" required>
+                                <label>Username</label>
+                                <input type="text" class="form-control" v-model="input.username" required>
                             </div>
                         </div>
                         <div class="col">
@@ -43,7 +43,7 @@
     export default {
         data(){
             return{
-                input:{ email:'', password:'', name:'' }
+                input:{ username:'', password:'', nama:'' }
             }
         },
         methods: {
@@ -57,7 +57,7 @@
                         this.$toast.show('Submit fail...!')
                         res.data.err.forEach((msg) => { this.$toast.show(msg) });
                     }else{
-                        this.input = { email:'', password:'', name:'' }
+                        this.input = { username:'', password:'', nama:'' }
                         this.$toast.show('Submit success...!')
                     }
                 } catch (error) {

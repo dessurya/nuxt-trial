@@ -2,19 +2,19 @@
     <div>
         <div class="card">
             <form @submit.prevent="submitHendle()">
-                <div class="card-header">Update User Form <b>{{ user.email }}</b></div>
+                <div class="card-header">Update User Form <b>{{ user.username_old }}</b></div>
                 <div class="card-body">
                     <div class="row row-cols-2">
                         <div class="col">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" v-model="user.name" required>
+                                <label>Nama</label>
+                                <input type="text" class="form-control" v-model="user.nama" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" v-model="user.email" required>
+                                <label>Username</label>
+                                <input type="text" class="form-control" v-model="user.username" required>
                             </div>
                         </div>
                     </div>
@@ -36,15 +36,16 @@
     export default {
         data() {
             return {
-                user:{ email:'', name:'', id:'' }
+                user:{ username:'', nama:'', username_old:''}
             }
         },
         async asyncData({$axios, params}) {
             let user = {}
-            const res = await $axios.get(`/user/open/${params.id}`).catch(error => {
+            const res = await $axios.get(`/user/find/${params.username}`).catch(error => {
                 console.log(error)
             })
-            user = res.data.result.data
+            user = res.data.data
+            user.username_old = params.username
             return {
                 user
             }
@@ -53,7 +54,7 @@
             async submitHendle() {
                 try {
                     this.$toast.show('Submit in Process...')
-                    const res = await this.$axios.put(`/user/update/${this.user.id}`, {data: this.user}).catch(error => {
+                    const res = await this.$axios.put(`/user/update/${this.user.username_old}`, {data: this.user}).catch(error => {
                         this.$toast.show('Submit fail')
                     })
                     if(!res.data.res){
