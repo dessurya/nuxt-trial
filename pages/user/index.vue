@@ -76,7 +76,7 @@
                                 <th>Nama</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="userList.length >= 1">
                             <tr v-for="item in userList" :key="item.id">
                                 <td>
                                     <div class="btn-group">
@@ -90,6 +90,7 @@
                                 <td>{{ item.nama }}</td>
                             </tr>
                         </tbody>
+                        <tbody v-else><tr><td class="text-center" colspan="4">-- Not Found Data --</td></tr></tbody>
                     </table>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrapper">
         <LteMainNav />
         <LteMainAside/>
         <div class="content-wrapper">
